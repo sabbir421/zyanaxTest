@@ -46,7 +46,6 @@ exports.customerSignup = async (req, res) => {
     );
     return res.response.success(token, "Admin login Successfully");
   } catch (error) {
-    console.log(error);
     errorResponseHandler(res, error);
   }
 };
