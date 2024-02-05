@@ -34,6 +34,10 @@ const carttSchema = new mongoose.Schema(
       type: String,
       Required: true,
     },
+    quantity: {
+      type: Number,
+      Required: true,
+    },
   },
   {
     timestamps: {

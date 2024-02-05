@@ -1,9 +1,13 @@
 const errorResponseHandler = require("../helper/lib/errorResponseHandler");
-const { addTocart, getProductById } = require("../models/cartModel");
+const {
+  addTocart,
+  getProductById,
+  removeProductFromCart,
+} = require("../models/cartModel");
 
 exports.addToCart = async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { productId,quantity } = req.body;
 
     const product = await getProductById(productId);
     if (!product) {
@@ -19,9 +23,21 @@ exports.addToCart = async (req, res) => {
       size,
       shippingCharge,
       image,
+      quantity
     });
     return res.response.success(cart, "add to cart successfully");
   } catch (error) {
+    errorResponseHandler(res, error);
+  }
+};
+
+exports.removeProductFromCart = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await removeProductFromCart(id);
+    return res.response.success({}, "Remove product from cart");
+  } catch (error) {
+    console.log(error);
     errorResponseHandler(res, error);
   }
 };
