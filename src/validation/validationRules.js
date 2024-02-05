@@ -11,7 +11,7 @@ const createProductRules = {
   image: "required",
   shippingCharge: "required|string",
   color: "required|string",
-  size: "required|string|in:S,M,L,XL,XXL,XXXL",
+  size: "required|string",
 };
 const createCustomerRules = {
   phone: "required|string",

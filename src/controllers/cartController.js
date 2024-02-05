@@ -7,11 +7,11 @@ const {
 
 exports.addToCart = async (req, res) => {
   try {
-    const { productId,quantity } = req.body;
+    const { productId, quantity } = req.body;
 
     const product = await getProductById(productId);
     if (!product) {
-      return res.res.fail(null, "product not found", {});
+      return res.response.fail(null, "product not found", {});
     }
     const { productName, price, offer, color, size, shippingCharge, image } =
       product;
@@ -23,10 +23,11 @@ exports.addToCart = async (req, res) => {
       size,
       shippingCharge,
       image,
-      quantity
+      quantity,
     });
     return res.response.success(cart, "add to cart successfully");
   } catch (error) {
+    console.log(error);
     errorResponseHandler(res, error);
   }
 };

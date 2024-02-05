@@ -18,3 +18,14 @@ exports.getProductById = async (id) => {
 };
 
 exports.removeProductFromCart = async (id) => await Cart.findByIdAndDelete(id);
+
+exports.orderSummery = async () => {
+  try {
+    return await Cart.find(
+      {},
+      { price: 1, quantity: 1, shippingCharge: 1, _id: 0 }
+    );
+  } catch (error) {
+    throw error;
+  }
+};
