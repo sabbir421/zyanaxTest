@@ -6,7 +6,11 @@ exports.addToCart = async (req, res) => {
     const { productId } = req.body;
 
     const product = await getProductById(productId);
-    const { productName, price, offer, color, size, shippingCharge,image } = product;
+    if (!product) {
+      return res.res.fail(null, "product not found", {});
+    }
+    const { productName, price, offer, color, size, shippingCharge, image } =
+      product;
     const cart = await addTocart({
       productName,
       price,
@@ -14,9 +18,9 @@ exports.addToCart = async (req, res) => {
       color,
       size,
       shippingCharge,
-      image
+      image,
     });
-    return res.response.success(cart, "add to cart");
+    return res.response.success(cart, "add to cart successfully");
   } catch (error) {
     errorResponseHandler(res, error);
   }
