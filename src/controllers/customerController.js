@@ -134,7 +134,6 @@ exports.changeCustomerStatus = async (req, res) => {
 exports.getCustomerById = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
     const customer = await getCustomerById(id);
     if (!customer) {
       return res.response.fail(null, "Customer not found");

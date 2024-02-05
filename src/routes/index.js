@@ -3,6 +3,7 @@ const healthRoute = require("./health/healthRoute");
 const router = express.Router();
 const adminRoute = require("./admin/adminRoute");
 const customerRoute = require("./customer/customerRoute");
+const productRoute = require("./product/productRoute");
 const defaultRoutes = [
   {
     path: "/check",
@@ -16,6 +17,10 @@ const defaultRoutes = [
   {
     path: "/auth/customer",
     route: customerRoute,
+  },
+  {
+    path: "/product",
+    route: productRoute,
   },
 ];
 
