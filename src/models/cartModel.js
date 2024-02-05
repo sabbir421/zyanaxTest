@@ -16,3 +16,5 @@ exports.getProductById = async (id) => {
     throw error;
   }
 };
+
+exports.removeProductFromCart = async (id) => await Cart.findByIdAndDelete(id);
