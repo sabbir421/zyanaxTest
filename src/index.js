@@ -7,8 +7,6 @@ const databaseInit = require("./config/database");
 const { variable } = require("./config/variables");
 const responseHandler = require("./helper/lib/responseHandler");
 
-
-
 const app = express();
 dotenv.config();
 databaseInit();

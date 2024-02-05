@@ -3,15 +3,15 @@ const createAdminRules = {
   originalpassword: "required|string",
 };
 
-const createSellerRules = {
-  firstName: "required|string",
-  lastName: "required|string",
-  userName: "required|string",
-  mobile: "required|string",
-  password: "required|string",
-  role: "required|string|in:SELLER",
-  status: "required|string|in:PENDING,PROCESSING,ACTIVE,INACTIVE,SUSPENDED",
-  email: "required|string",
+const createProductRules = {
+  productName: "required|string",
+  price: "required|string",
+  offer: "required|string",
+  status: "required|string|in:ACTIVE,INACTIVE",
+  image: "required",
+  shippingCharge: "required|string",
+  color: "required|string",
+  size: "required|string|in:S,M,L,XL,XXL,XXXL",
 };
 
 const updateAdminRules = {
@@ -67,7 +67,7 @@ module.exports = {
   createAdminRules,
   updateAdminRules,
   createVendorRules,
-  createSellerRules,
+  createProductRules,
   updateSellerRules,
   createCustomerRules,
   updateVendorRules,
