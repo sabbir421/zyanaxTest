@@ -18,8 +18,18 @@ const createCustomerRules = {
   originalPassword: "required|string",
 };
 
+const promocodeRules = {
+  promocode: "required|string",
+  startDate: "required|string",
+  endDate: "required|string",
+  discountRate: "required",
+  useTime: "required|integer",
+  status: "required|string",
+};
+
 module.exports = {
   createAdminRules,
   createProductRules,
   createCustomerRules,
+  promocodeRules,
 };
