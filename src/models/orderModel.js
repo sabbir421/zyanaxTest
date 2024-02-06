@@ -6,3 +6,14 @@ exports.checkout = async (data) => {
 };
 
 exports.getOrderList = async () => await Order.find();
+
+exports.getOrderById = async (id) => await Order.findById(id);
+
+exports.confirmOrder = async (id) => {
+  const confirm = Order.findByIdAndUpdate(
+    id,
+    { $set: { status: "CONFIRM" } },
+    { new: true }
+  );
+  return confirm;
+};
