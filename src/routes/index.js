@@ -5,6 +5,7 @@ const adminRoute = require("./admin/adminRoute");
 const customerRoute = require("./customer/customerRoute");
 const productRoute = require("./product/productRoute");
 const cartRoute = require("./cart/cartRoute");
+const promoRoute = require("./promo/promoRoute");
 const defaultRoutes = [
   {
     path: "/check",
@@ -26,6 +27,10 @@ const defaultRoutes = [
   {
     path: "/cart",
     route: cartRoute,
+  },
+  {
+    path: "/promo",
+    route: promoRoute,
   },
 ];
 
