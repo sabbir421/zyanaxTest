@@ -7,11 +7,12 @@ exports.createPromo = async (data) => {
 };
 
 exports.updatePromo = async (id, data) => {
-    const updatedPromo = await Promocode.findByIdAndUpdate(
-      id,
-      { $set: data },
-      { new: true }
-    );
-    return updatedPromo;
-  };
-  
+  const updatedPromo = await Promocode.findByIdAndUpdate(
+    id,
+    { $set: data },
+    { new: true }
+  );
+  return updatedPromo;
+};
+
+exports.promoList = async () => await Promocode.find();
