@@ -29,3 +29,4 @@ exports.orderSummery = async () => {
     throw error;
   }
 };
+exports.getCartList = async () => await Cart.find();

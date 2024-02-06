@@ -1,5 +1,10 @@
 const errorResponseHandler = require("../helper/lib/errorResponseHandler");
-const { orderSummery } = require("../models/cartModel");
+const {
+  orderSummery,
+  getCartList,
+  removeProductFromCart,
+} = require("../models/cartModel");
+const { checkout } = require("../models/orderModel");
 const { addProduct } = require("../models/prductModel");
 const { createProductRules } = require("../validation/validationRules");
 const { validate } = require("../validation/validator");
@@ -50,6 +55,34 @@ exports.orderSummary = async (req, res) => {
 
     const summery = { subTotal, totalProducts, shippingCharge };
     return res.response.success(summery, "order Summery");
+  } catch (error) {
+    console.log(error);
+    errorResponseHandler(res, error);
+  }
+};
+
+exports.checkout = async (req, res) => {
+  try {
+    const orderList = await getCartList();
+    let singleOrder = {};
+    for (const order of orderList) {
+      singleOrder = order;
+      const { productName, price, offer, shippingCharge, color, size, image } =
+        singleOrder;
+      const orderDetails = {
+        productName,
+        price,
+        offer,
+        shippingCharge,
+        color,
+        size,
+        image,
+      };
+
+      await checkout(orderDetails);
+      await removeProductFromCart(singleOrder._id);
+    }
+    return res.response.success({}, "checkout");
   } catch (error) {
     console.log(error);
     errorResponseHandler(res, error);
