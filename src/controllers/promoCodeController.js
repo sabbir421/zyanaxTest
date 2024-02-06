@@ -1,5 +1,9 @@
 const errorResponseHandler = require("../helper/lib/errorResponseHandler");
-const { createPromo, updatePromo } = require("../models/promocodeModel");
+const {
+  createPromo,
+  updatePromo,
+  promoList,
+} = require("../models/promocodeModel");
 const { promocodeRules } = require("../validation/validationRules");
 const { validate } = require("../validation/validator");
 
@@ -43,8 +47,20 @@ exports.updatePromo = async (req, res) => {
       useTime,
       status,
     };
-    const response = await updatePromo(id,updatedData);
+    const response = await updatePromo(id, updatedData);
     return res.response.success(response, "promocode updated successfully");
+  } catch (error) {
+    errorResponseHandler(res, error);
+  }
+};
+
+exports.promoList = async (req, res) => {
+  try {
+    const promocodeLit = await promoList();
+    if (promocodeLit < 1) {
+      return res.response.fail(null, "Promo list empty");
+    }
+    return res.response.success(promocodeLit, "promo list");
   } catch (error) {
     errorResponseHandler(res, error);
   }
