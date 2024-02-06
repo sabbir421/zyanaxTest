@@ -3,6 +3,7 @@ const {
   addTocart,
   getProductById,
   removeProductFromCart,
+  getCartList,
 } = require("../models/cartModel");
 
 exports.addToCart = async (req, res) => {
@@ -31,7 +32,17 @@ exports.addToCart = async (req, res) => {
     errorResponseHandler(res, error);
   }
 };
-
+exports.getCartList=async(req,res)=>{
+  try {
+    const cartList=await getCartList()
+    if(cartList.length<1){
+      return res.response.fail(null,"cart list is empty")
+    }
+    return res.response.success(cartList,"Cart list")
+  } catch (error) {
+    errorResponseHandler(res,error)
+  }
+}
 exports.removeProductFromCart = async (req, res) => {
   try {
     const { id } = req.params;
