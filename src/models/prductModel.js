@@ -9,3 +9,4 @@ exports.addProduct = async (data) => {
     throw error;
   }
 };
+exports.getProductList = async () => await Product.find();

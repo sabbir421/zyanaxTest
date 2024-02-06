@@ -3,6 +3,7 @@ const {
   getOrderList,
   getOrderById,
   confirmOrder,
+  cancelOrder,
 } = require("../models/orderModel");
 
 exports.getOrderList = async (req, res) => {
@@ -26,6 +27,19 @@ exports.orderConfirm = async (req, res) => {
     }
     const response = await confirmOrder(id);
     return res.response.success(response, "Order confirm successfully");
+  } catch (error) {
+    errorResponseHandler(res, error);
+  }
+};
+exports.orderCancel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await getOrderById(id);
+    if (!order) {
+      return res.response.fail(null, "Order not found");
+    }
+    const response = await cancelOrder(id);
+    return res.response.success(response, "Order cancel successfully");
   } catch (error) {
     errorResponseHandler(res, error);
   }

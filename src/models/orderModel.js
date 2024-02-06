@@ -17,3 +17,11 @@ exports.confirmOrder = async (id) => {
   );
   return confirm;
 };
+exports.cancelOrder = async (id) => {
+  const confirm = Order.findByIdAndUpdate(
+    id,
+    { $set: { status: "CANCEL" } },
+    { new: true }
+  );
+  return confirm;
+};

@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const errorResponseHandler = require("../helper/lib/errorResponseHandler");
 const {
   orderSummery,
@@ -5,7 +7,7 @@ const {
   removeProductFromCart,
 } = require("../models/cartModel");
 const { checkout } = require("../models/orderModel");
-const { addProduct } = require("../models/prductModel");
+const { addProduct, getProductList } = require("../models/prductModel");
 const { createProductRules } = require("../validation/validationRules");
 const { validate } = require("../validation/validator");
 
@@ -13,12 +15,14 @@ exports.addProduct = async (req, res) => {
   try {
     const { productName, price, offer, status, shippingCharge, color, size } =
       req.body;
-    const image = req.file;
+      const imageUrl = req.file.buffer.toString('base64');
     validate(
-      { productName, price, offer, status, image, shippingCharge, color, size },
+      { productName, price, offer, status, shippingCharge, color, size, image:imageUrl },
       createProductRules
     );
+
     const discountedPrice = price - price * (offer / 100);
+
     const productData = {
       productName,
       price: discountedPrice,
@@ -27,20 +31,30 @@ exports.addProduct = async (req, res) => {
       color,
       status,
       size,
-      image: {
-        data: image.buffer,
-        contentType: image.mimetype,
-      },
+      image:imageUrl,
     };
 
+    
     const product = await addProduct(productData);
 
     return res.response.success(product, "Product created");
   } catch (error) {
+    console.error(error);
     errorResponseHandler(res, error);
   }
 };
 
+exports.getProductList = async (req, res) => {
+  try {
+    const products = await getProductList();
+    if (products.length < 1) {
+      return res.response.fail(null, "Product list empty");
+    }
+    return res.response.success(products, "Product list");
+  } catch (error) {
+    errorResponseHandler(res, error);
+  }
+};
 exports.orderSummary = async (req, res) => {
   try {
     const cartProducts = await orderSummery();
