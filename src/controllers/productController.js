@@ -71,7 +71,6 @@ exports.orderSummary = async (req, res) => {
     let shippingCharge = 0;
     for (const product of cartProducts) {
       const productTotalPrice = product.price;
-      console.log(productTotalPrice);
       subTotal += productTotalPrice;
       shippingCharge += product.shippingCharge;
     }
