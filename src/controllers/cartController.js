@@ -4,6 +4,7 @@ const {
   getProductById,
   removeProductFromCart,
   getCartList,
+  updateCart,
 } = require("../models/cartModel");
 
 exports.addToCart = async (req, res) => {
@@ -25,6 +26,7 @@ exports.addToCart = async (req, res) => {
       shippingCharge,
       image,
       quantity,
+      singlePrice:price
     });
     return res.response.success(cart, "add to cart successfully");
   } catch (error) {
@@ -32,22 +34,34 @@ exports.addToCart = async (req, res) => {
     errorResponseHandler(res, error);
   }
 };
-exports.getCartList=async(req,res)=>{
+exports.getCartList = async (req, res) => {
   try {
-    const cartList=await getCartList()
-    if(cartList.length<1){
-      return res.response.fail(null,"cart list is empty")
+    const cartList = await getCartList();
+    if (cartList.length < 1) {
+      return res.response.fail(null, "cart list is empty");
     }
-    return res.response.success(cartList,"Cart list")
+    return res.response.success(cartList, "Cart list");
   } catch (error) {
-    errorResponseHandler(res,error)
+    errorResponseHandler(res, error);
   }
-}
+};
 exports.removeProductFromCart = async (req, res) => {
   try {
     const { id } = req.params;
     await removeProductFromCart(id);
     return res.response.success({}, "Remove product from cart");
+  } catch (error) {
+    console.log(error);
+    errorResponseHandler(res, error);
+  }
+};
+
+exports.updateCart = async (req, res) => {
+  try {
+    const { _id, singlePrice, quantity } = req.body;
+    const newPrice = singlePrice * quantity;
+    const response = await updateCart(_id, newPrice, quantity);
+    return res.response.success(response, "cart update");
   } catch (error) {
     console.log(error);
     errorResponseHandler(res, error);

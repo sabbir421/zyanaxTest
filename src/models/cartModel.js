@@ -30,3 +30,12 @@ exports.orderSummery = async () => {
   }
 };
 exports.getCartList = async () => await Cart.find();
+
+exports.updateCart = async (id, updatePrice, quantity) => {
+  const response = await Cart.findByIdAndUpdate(
+    { _id: id },
+    { $set: { price: updatePrice, quantity: quantity } },
+    { new: true }
+  );
+  return response;
+};

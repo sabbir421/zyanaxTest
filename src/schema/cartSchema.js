@@ -10,13 +10,16 @@ const carttSchema = new mongoose.Schema(
       type: Number,
       Required: true,
     },
+    singlePrice: {
+      type: Number,
+      Required: true,
+    },
     offer: {
       type: Number,
       Required: true,
     },
     image: {
-      data: Buffer,
-      contentType: String,
+      type: String,
     },
     status: {
       type: String,

@@ -15,9 +15,18 @@ exports.addProduct = async (req, res) => {
   try {
     const { productName, price, offer, status, shippingCharge, color, size } =
       req.body;
-      const imageUrl = req.file.buffer.toString('base64');
+    const imageUrl = req.file.buffer.toString("base64");
     validate(
-      { productName, price, offer, status, shippingCharge, color, size, image:imageUrl },
+      {
+        productName,
+        price,
+        offer,
+        status,
+        shippingCharge,
+        color,
+        size,
+        image: imageUrl,
+      },
       createProductRules
     );
 
@@ -31,10 +40,9 @@ exports.addProduct = async (req, res) => {
       color,
       status,
       size,
-      image:imageUrl,
+      image: imageUrl,
     };
 
-    
     const product = await addProduct(productData);
 
     return res.response.success(product, "Product created");
@@ -62,7 +70,8 @@ exports.orderSummary = async (req, res) => {
     let subTotal = 0;
     let shippingCharge = 0;
     for (const product of cartProducts) {
-      const productTotalPrice = product.price * (product.quantity || 1);
+      const productTotalPrice = product.price;
+      console.log(productTotalPrice);
       subTotal += productTotalPrice;
       shippingCharge += product.shippingCharge;
     }
