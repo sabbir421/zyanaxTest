@@ -26,6 +26,7 @@ exports.createPromoCode = async (req, res) => {
     const response = await createPromo(promoData);
     return res.response.success(response, "Promocode created successfully");
   } catch (error) {
+    console.log(error);
     errorResponseHandler(res, error);
   }
 };

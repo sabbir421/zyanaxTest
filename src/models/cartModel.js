@@ -17,7 +17,7 @@ exports.getProductById = async (id) => {
   }
 };
 
-exports.removeProductFromCart = async (id) => await Cart.findByIdAndDelete(id);
+exports.removeProductFromCart = async () => await Cart.deleteMany();
 
 exports.orderSummery = async () => {
   try {

@@ -14,6 +14,7 @@ exports.getOrderList = async (req, res) => {
     }
     return res.response.success(orderList, "Order list");
   } catch (error) {
+    console.log(error);
     errorResponseHandler(res, error);
   }
 };

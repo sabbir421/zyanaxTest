@@ -68,6 +68,7 @@ exports.orderSummary = async (req, res) => {
     const cartProducts = await orderSummery();
     let totalProducts = cartProducts.length;
     let subTotal = 0;
+    let discount = 0;
     let shippingCharge = 0;
     for (const product of cartProducts) {
       const productTotalPrice = product.price;
@@ -75,7 +76,7 @@ exports.orderSummary = async (req, res) => {
       shippingCharge += product.shippingCharge;
     }
 
-    const summery = { subTotal, totalProducts, shippingCharge };
+    const summery = { subTotal, totalProducts, shippingCharge, discount };
     return res.response.success(summery, "order Summery");
   } catch (error) {
     console.log(error);
@@ -85,25 +86,15 @@ exports.orderSummary = async (req, res) => {
 
 exports.checkout = async (req, res) => {
   try {
-    const orderList = await getCartList();
-    let singleOrder = {};
-    for (const order of orderList) {
-      singleOrder = order;
-      const { productName, price, offer, shippingCharge, color, size, image } =
-        singleOrder;
-      const orderDetails = {
-        productName,
-        price,
-        offer,
-        shippingCharge,
-        color,
-        size,
-        image,
-      };
-
-      await checkout(orderDetails);
-      await removeProductFromCart(singleOrder._id);
-    }
+    const { shippingCharge, subTotal, discount, totalPayable } = req.body;
+    const orderDetails = {
+      shippingCharge,
+      subTotal,
+      discount,
+      totalPayable,
+    };
+    await checkout(orderDetails);
+    await removeProductFromCart();
     return res.response.success({}, "checkout");
   } catch (error) {
     console.log(error);

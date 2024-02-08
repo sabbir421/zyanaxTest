@@ -1,31 +1,30 @@
 const Order = require("../schema/orderSchema");
+const Summery = require("../schema/summerySchema");
 
 exports.checkout = async (data) => {
-  const order = new Order(data);
+  const order = new Summery(data);
   return order.save();
 };
 
-exports.getOrderList = async () => await Order.find();
+exports.getOrderList = async () => await Summery.find();
 
-exports.getOrderById = async (id) => await Order.findById(id);
+exports.getOrderById = async (id) => await Summery.findById(id);
 
 exports.confirmOrder = async (id) => {
   try {
-    // Use await to ensure that the update operation is executed
-    const confirm = await Order.findByIdAndUpdate(
+    const confirm = await Summery.findByIdAndUpdate(
       id,
       { $set: { status: "CONFIRM" } },
       { new: true }
     );
     return confirm;
   } catch (error) {
-    // Handle errors
     console.error("Error confirming order:", error);
-    throw error; // Rethrow the error to be handled by the caller
+    throw error;
   }
 };
 exports.cancelOrder = async (id) => {
-  const confirm = await Order.updateOne(
+  const confirm = await Summery.updateOne(
     { _id: id },
     { $set: { status: "CANCEL" } },
     { new: true }
