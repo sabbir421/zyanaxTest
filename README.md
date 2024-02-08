@@ -1,5 +1,5 @@
 # qc-warehouse-server
-Dev API : https://qc-warehouse-api.onrender.com/
+Dev API : https://shop-store-qa2a.onrender.com
 
 checklist :
 remove from cart
