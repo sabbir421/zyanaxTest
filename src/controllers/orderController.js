@@ -26,11 +26,13 @@ exports.orderConfirm = async (req, res) => {
       return res.response.fail(null, "Order not found");
     }
     const response = await confirmOrder(id);
-    return res.response.success(response, "Order confirm successfully");
+    return res.response.success(response, "Order confirmed successfully");
   } catch (error) {
+    console.error(error);
     errorResponseHandler(res, error);
   }
 };
+
 exports.orderCancel = async (req, res) => {
   try {
     const { id } = req.params;

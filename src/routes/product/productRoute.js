@@ -13,7 +13,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 router.post("/add", upload.single("image"), addProduct);
 router.get("/summery", orderSummary);
-router.get("/list",getProductList)
+router.get("/list", getProductList);
 router.post("/checkout", checkout);
 
 module.exports = router;
